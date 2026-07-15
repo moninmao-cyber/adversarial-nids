@@ -1,0 +1,9 @@
+Adversarial Attack Comparison on Full CIC-IDS2017 NIDS
+=======================================================
+Attack               Success Rate    Model Accuracy  Time (s)  
+-------------------------------------------------------
+FGSM (ε=1.0)         1.00            0.1103          0.3       
+PGD (ε=1.0)          1.00            0.0006          0.5       
+GA (150 gen)         1.00            0.0000          33.9      
+
+GA evaluated on 200 attack samples due to runtime.

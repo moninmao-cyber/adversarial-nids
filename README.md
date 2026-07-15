@@ -44,12 +44,22 @@ The model was trained on the **Friday DDoS subset** of CIC‑IDS2017, a widely u
 
 All attacks enforce **domain constraints** (feature min/max from training data), preventing unrealistic adversarial flows.
 
-## Results
+## Results (Full CIC‑IDS2017, balanced)
 
-![Comparison](results/comparison.png)
+![Comparison](results/comparison_full.png)
 
-- **White‑box:** PGD with ε=1.0 achieved 100% attack success and 2% model accuracy.
-- **Black‑box:** Genetic algorithm (40 gen) evaded 54% of attacks with 46% accuracy. Tuning to 150 generations achieves >90% success (see `tune_ga.py`).
+| Attack | Type | Success Rate | Model Accuracy |
+|--------|------|-------------|----------------|
+| FGSM (ε=1.0) | White‑box, one‑shot | 99.8% | 11.0% |
+| PGD (ε=1.0) | White‑box, iterative | 99.99% | 0.06% |
+| Genetic Algorithm (150 gen) | Black‑box, evolutionary | 100% | 0.0% |
+
+All attacks used domain‑constrained perturbations bounded by training‑set feature ranges.
+
+**Key findings:**
+- White‑box attacks can completely disable the NIDS with imperceptible perturbations.
+- The black‑box genetic algorithm, using only model confidence scores, achieved a perfect 100% evasion on 200 attack samples.
+- Even a state‑of‑the‑art ML detector can be rendered useless without any access to its internal parameters.
 
 ## Quick Start
 
@@ -67,22 +77,16 @@ pip install -r requirements.txt
 Obtain MachineLearningCSV.zip from Kaggle, extract into data/ so that the path data/MachineLearningCSV/MachineLearningCVE/Friday-...csv exists.
 
 4. Preprocess & Train 
-python src/preprocess.py
-python src/train_baseline.py
+python src/preprocess_full.py
+python src/train_full.py
 
 5. Run attacks
-python attacks/attack_fgsm_constrained.py
-python attacks/attack_pgd_constrained.py
-python attacks/attack_ga_blackbox.py
+python attacks/run_all_attacks.py
 
-Dependencies
-
+Dependencies:
 Python 3.10+
-
 PyTorch
-
 NumPy, Pandas, Scikit‑learn
-
 Matplotlib, Joblib
 
 See requirements.txt for exact versions.
