@@ -1,0 +1,9 @@
+Adversarial Attack Comparison on CIC-IDS2017 NIDS
+==================================================
+Attack               Success Rate    Model Accuracy 
+--------------------------------------------------
+FGSM (ε=1.0)         1.00            0.3175         
+PGD (ε=1.0)          1.00            0.0211         
+GA (150 gen)         0.54            0.4600         
+
+Note: GA used 40 generations; tuning showed 150 generations needed for >90% success.
